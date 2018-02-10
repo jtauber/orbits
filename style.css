@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css?family=Delius|Lato');
+
+body {
+  margin: 0;
+  background: #1F2018;
+  font-family: 'Delius', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  color: rgba(211, 211, 211, 1.0);
+}
+h1 {
+  font-size: 32pt;
+}
+h2 {
+  font-size: 24pt;
+}
+ul.lessons {
+  list-style: none;
+}
+ul.lessons li .num {
+  color: rgba(211, 211, 211, 0.4);
+}
+p, li {
+  font-size: 16pt;
+}
+p.note {
+  font-size: 12pt;
+  color: rgba(211, 211, 211, 0.4);
+}
+nav {
+  background: black;
+  padding: 5px 10px;
+  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-size: 12pt;
+}
+a {
+  text-decoration: none;
+  color: rgba(211, 211, 211, 0.8);
+}
+a.twitter {
+  float: right;
+}
+a:hover {
+  color: white;
+}
+a.active {
+  color: rgba(211, 211, 211, 0.4);
+}
+main {
+  padding: 20px 50px;
+}
+#drawing {
+  text-align: center;
+}

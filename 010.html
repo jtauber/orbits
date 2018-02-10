@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Kepler's First Law — Orbits Tutorial</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="index.html">Orbits Tutorial</a> &mdash;
+      <a href="010.html" class="active">10</a> |
+      <a href="015.html">15</a> |
+      <a href="020.html">20</a> |
+      <a href="040.html">40</a> |
+      <a href="050.html">50</a>
+      <a href="https://twitter.com/jtauber" class="twitter">@jtauber</a>
+    </nav>
+    <main>
+      <h2>Kepler's First Law</h2>
+      <p>
+        Under Kepler's model, planetary orbits are ellipses with the Sun at one
+        of the focal points. This is known as Kepler's First Law.
+      </p>
+      <div id="drawing"></div>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.4/svg.min.js">
+    </script>
+    <script>
+      var mx = 800;
+      var my = 800;
+
+      var draw = SVG('drawing').size(mx, my);
+
+      var rx = 300;
+      var ry = 250;
+      var cx = mx / 2;
+      var cy = my / 2;
+
+      var focus1 = draw.circle(20).fill("rgba(211, 211, 211, 1.0)");
+      var focus2 = draw.circle(10).fill("rgba(211, 211, 211, 0.3)");
+      var orbit = draw.ellipse().fill("none").stroke("rgba(211, 211, 211, 1.0)").center(cx, cy);
+
+      focus1.center(cx - Math.sqrt(rx*rx - ry*ry), cy);
+      focus2.center(cx + Math.sqrt(rx*rx - ry*ry), cy);
+      orbit.size(rx * 2, ry * 2);
+
+      callback();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Current Positions of Inner Planets — Orbits Tutorial</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="index.html">Orbits Tutorial</a> &mdash;
+      <a href="010.html">10</a> |
+      <a href="015.html">15</a> |
+      <a href="020.html">20</a> |
+      <a href="040.html">40</a> |
+      <a href="050.html" class="active">50</a>
+      <a href="https://twitter.com/jtauber" class="twitter">@jtauber</a>
+    </nav>
+    <main>
+      <h2>Current Positions of Inner Planets</h2>
+      <p>
+        Currently only based on each planet's semi-major axis, eccentricity,
+        longitude of the perihelion, and mean anomaly at epoch.
+        Inclination and longitude of the ascending node to be incorporated shortly.
+      </p>
+      <div id="drawing"></div>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.4/svg.min.js">
+    </script>
+    <script>
+
+      var mx = 800;
+      var my = 800;
+
+      var draw = SVG('drawing').size(mx, my);
+
+      scale = 200;
+
+      var fx = mx / 2;
+      var fy = my / 2;
+
+      var MERCURY = {
+        a: scale * 0.387,
+        ecc: 0.206,
+        maae: 174.796,
+        period: 87.969,
+        rot: 77.456
+      };
+
+      var VENUS = {
+        a: scale * 0.723,
+        ecc: 0.00677,
+        maae: 50.115,
+        period: 224.70,
+        rot: 131.532
+      };
+
+      var EARTH = {
+        a: scale * 1.000,
+        ecc: 0.0167,
+        maae: 358.617,
+        period: 365.256,
+        rot: 102.947
+      };
+
+      var MARS = {
+        a: scale * 1.524,
+        ecc: 0.0934,
+        maae: 19.3870,
+        period: 686.980,
+        rot: 336.041
+      }
+
+      var planets = [MERCURY, VENUS, EARTH, MARS];
+
+      for (var i=0, size=planets.length; i < size; i++) {
+        var planet = planets[i];
+        planet.b = planet.a * Math.sqrt(1 - Math.pow(planet.ecc, 2));
+        planet.cx = fx + Math.sqrt(Math.pow(planet.a, 2) - Math.pow(planet.b, 2));
+        planet.cy = fy;
+        planet.orbit = draw.ellipse(planet.a * 2, planet.b * 2).fill("none").stroke("lightgray").center(planet.cx, planet.cy).transform({rotation: planet.rot, cx: fx, cy: fy});
+        planet.planet = draw.circle(8).fill("lightgray");
+      }
+
+      var sun = draw.circle(15).fill("lightgray").center(fx, fy);
+
+      var d = new Date();
+      var millis = d.getTime();
+      var tai_offset = 37; // number of leap seconds; last updated 2017-01-01
+      var jd_ut = 2440587.5 + (millis / 8.64E7);
+      var jd_tt = jd_ut + (tai_offset + 32.184) / 86400;
+      var j2000 = jd_tt - 2451545.0;
+
+      function position(t, planet) {
+
+        // mean anomaly
+        var Mdeg = (planet.maae + (360 / planet.period) * t) % 360;
+
+        var Mrad = Math.PI * Mdeg / 180;
+
+        // calculate eccentric anomaly using Newton-Rhapson
+        var Erad = Mrad;
+        var next = 0;
+        var count = 0;
+        while (count++ < 10) {
+          next = Erad + (Mrad - (Erad - planet.ecc * Math.sin(Erad)))/(1 - planet.ecc * Math.cos(Erad));
+          if (Math.abs(next - Erad) < 1E-6) {
+            break;
+          }
+          Erad = next;
+        }
+        var Edeg = 180 * Erad / Math.PI;
+
+        // calculate true anomaly
+        var nurad = -2 * Math.atan2(Math.sqrt(1 - planet.ecc) * Math.cos(Erad / 2), Math.sqrt(1 + planet.ecc) * Math.sin(Erad / 2));
+        var nudeg = 180 * nurad / Math.PI;
+
+        // calculate distance from focus
+        var r = planet.a * (1 - planet.ecc * Math.cos(Erad));
+
+        return [r, nurad];
+      }
+
+      function callback(ms) {
+        for (var i=0, size=planets.length; i < size; i++) {
+          var planet = planets[i];
+
+          [r, theta] = position(j2000, planet);
+          planet.planet.center(fx + r * Math.cos(theta), fy + r * Math.sin(theta)).transform({rotation: planet.rot, cx: fx, cy: fy});
+        }
+
+        requestAnimationFrame(callback);
+      }
+      callback();
+    </script>
+  </body>
+</html>
