@@ -60,3 +60,8 @@ main {
 .secondary-focus {
   fill: rgba(211, 211, 211, 0.3);
 }
+.text {
+    font-family: "Delius";
+    font-size: 24pt;
+    fill: rgba(211, 211, 211, 1.0);
+}

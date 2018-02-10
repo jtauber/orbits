@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Focal points and eccentricity — Orbits Tutorial</title>
+    <meta charset="utf-8" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -26,44 +27,43 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.4/svg.min.js">
     </script>
     <script>
+
       var mx = 800;
       var my = 800;
 
       var draw = SVG('drawing').size(mx, my);
 
-      var rx = 300;
-      var ry = 200;
       var cx = mx / 2;
       var cy = my / 2;
 
-      var focus1 = draw.circle(10);
-      var focus2 = draw.circle(10).fill("rgba(211, 211, 211, 0.5)");
-      var orbit = draw.ellipse().fill("none").stroke("rgba(211, 211, 211, 1.0)").center(cx, cy);
-      var text = draw.text("").center(100, 100).font({family: "Delius", size: 32}).fill("rgba(211, 211, 211, 1.0)");
+      var a = 300;
+
+      var focus1 = draw.circle(10).addClass('secondary-focus');
+      var focus2 = draw.circle(10).addClass('secondary-focus');
+      var orbit = draw.ellipse().center(cx, cy).addClass('orbit');
+      var text = draw.text("").center(100, 100).addClass('text');
 
       function callback(ms) {
-        var m = Math.abs((ms % 2000) - 1000) - 100;
+
+        // we want c to oscillate from 0-300, pausing at each end
+        var m = Math.abs((ms % 2200) - 1100) - 100;
         if (m < 0) m = 0;
-        var c = m / 4;
+        if (m > 900) m = 900;
+        var c = m / 3;
 
-        if (m == 0) {
-          focus1.fill("rgba(211, 211, 211, 1)");
-        } else {
-          focus1.fill("rgba(211, 211, 211, 0.5)");
-        }
+        b = Math.sqrt(Math.pow(a, 2) - Math.pow(c, 2));
 
-        ry = Math.sqrt(Math.pow(rx, 2) - Math.pow(c, 2));
-
-        var ecc = Math.sqrt(1 - Math.pow(ry / rx, 2))
+        var ecc = Math.sqrt(1 - Math.pow(b / a, 2))
         text.text(`e = ${Math.round(ecc * Math.pow(10, 1)) / Math.pow(10, 1)}`);
 
         focus1.center(cx - c, cy);
         focus2.center(cx + c, cy);
-        orbit.size(rx * 2, ry * 2);
+        orbit.size(a * 2, b * 2 + 1);  // add 1 pixel just so e = 1 draws line
+
         requestAnimationFrame(callback);
       }
-
       callback();
+
     </script>
     <script type="text/javascript">
       var _gauges = _gauges || [];
