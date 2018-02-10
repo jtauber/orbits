@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Kepler's First Law — Orbits Tutorial</title>
+    <meta charset="utf-8" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -25,25 +26,28 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.4/svg.min.js">
     </script>
     <script>
+
       var mx = 800;
       var my = 800;
 
       var draw = SVG('drawing').size(mx, my);
 
-      var rx = 300;
-      var ry = 250;
       var cx = mx / 2;
       var cy = my / 2;
 
-      var focus1 = draw.circle(20).fill("rgba(211, 211, 211, 1.0)");
-      var focus2 = draw.circle(10).fill("rgba(211, 211, 211, 0.3)");
-      var orbit = draw.ellipse().fill("none").stroke("rgba(211, 211, 211, 1.0)").center(cx, cy);
+      var a = 300;
+      var b = 250;
 
-      focus1.center(cx - Math.sqrt(rx*rx - ry*ry), cy);
-      focus2.center(cx + Math.sqrt(rx*rx - ry*ry), cy);
-      orbit.size(rx * 2, ry * 2);
+      var focus1 = draw.circle(20).addClass('main-focus');
+      var focus2 = draw.circle(10).addClass('secondary-focus');
+      var orbit = draw.ellipse().center(cx, cy).addClass('orbit');
 
-      callback();
+      var c = Math.sqrt(Math.pow(a, 2) - Math.pow(b, 2));
+
+      focus1.center(cx - c, cy);
+      focus2.center(cx + c, cy);
+      orbit.size(a * 2, b * 2);
+
     </script>
     <script type="text/javascript">
       var _gauges = _gauges || [];

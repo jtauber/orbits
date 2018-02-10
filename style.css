@@ -50,3 +50,13 @@ main {
 #drawing {
   text-align: center;
 }
+.orbit {
+  fill: none;
+  stroke: rgba(211, 211, 211, 1.0);
+}
+.main-focus {
+  fill: rgba(211, 211, 211, 1.0);
+}
+.secondary-focus {
+  fill: rgba(211, 211, 211, 0.3);
+}
