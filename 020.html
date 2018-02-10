@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Kepler's Second Law — Orbits Tutorial</title>
+    <meta charset="utf-8" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
@@ -39,14 +40,13 @@
       var b = 250;
 
       var ecc = Math.sqrt(1 - Math.pow(b / a, 2));
-      var slr = Math.pow(b, 2) / a;
 
-      var path = draw.path().fill("#303027");
+      var path = draw.path().addClass('area');
 
-      var focus1 = draw.circle(20).fill("rgba(211, 211, 211, 1.0)");
-      var orbit = draw.ellipse().fill("none").stroke("rgba(211, 211, 211, 1.0)").center(cx, cy);
+      var focus1 = draw.circle(20).addClass('main-focus');
+      var orbit = draw.ellipse().center(cx, cy).addClass('orbit');
 
-      var planet = draw.circle(10).fill("rgba(211, 211, 211, 1.0)");
+      var planet = draw.circle(10).addClass('planet');
 
       var fx = cx - Math.sqrt(a*a - b*b);
       var fy = cy;
@@ -54,10 +54,10 @@
       focus1.center(fx, fy);
       orbit.size(a * 2, b * 2);
 
-      var line1 = draw.line(0, 0, fx, fy).stroke({ width: 1, color: "rgba(211, 211, 211, 1.0)"});
-      var line2 = draw.line(0, 0, fx, fy).stroke({ width: 1, color: "rgba(211, 211, 211, 1.0)"});
+      var line1 = draw.line(0, 0, fx, fy).addClass('radial-line');
 
       function position(t) {
+
         // mean anomaly
         var M = 2 * Math.PI * t;
 
@@ -73,7 +73,7 @@
           E = next;
         }
 
-        // calculate total anomaly
+        // calculate true anomaly
         var theta = 2 * Math.atan2(Math.sqrt(1 - ecc) * Math.cos(E / 2), Math.sqrt(1 + ecc) * Math.sin(E / 2));
 
         // calculate distance from focus
@@ -84,24 +84,23 @@
 
       function callback(ms) {
         var t = (ms / 5000) % 1;
-        [r, theta] = position(t);
-        [r2, theta2] = position(t - 0.05);
+        if (!isNaN(t)) {
+          [r, theta] = position(t);
+          [r2, theta2] = position(t - 0.05);
 
-        var x1 = fx + r * Math.cos(theta);
-        var y1 = fy + r * Math.sin(theta);
-        var x2 = fx + r2 * Math.cos(theta2);
-        var y2 = fy + r2 * Math.sin(theta2);
+          var x1 = fx + r * Math.cos(theta);
+          var y1 = fy + r * Math.sin(theta);
+          var x2 = fx + r2 * Math.cos(theta2);
+          var y2 = fy + r2 * Math.sin(theta2);
 
-        if (!isNaN(x1)) {
           planet.center(x1, y1);
           line1.plot(x1, y1, fx, fy);
-          line2.plot(x2, y2, fx, fy);
           path.plot(`M ${x1} ${y1} A ${a} ${b} 0 0 1 ${x2} ${y2} L ${fx} ${fy}`);
         }
         requestAnimationFrame(callback);
       }
-
       callback();
+
     </script>
     <script type="text/javascript">
       var _gauges = _gauges || [];
