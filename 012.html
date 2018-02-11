@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Eccentricity and the Semi-Major/Semi-Minor Axes — Orbits Tutorial</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="./">Orbits Tutorial</a> &mdash;
+      <a href="010.html">10</a> |
+      <a href="012.html" class="active">12</a> |
+      <a href="015.html">15</a> |
+      <a href="020.html">20</a> |
+      <a href="040.html">40</a> |
+      <a href="050.html">50</a>
+      <a href="https://twitter.com/jtauber" class="twitter">@jtauber</a>
+    </nav>
+    <main>
+      <h2>Eccentricity and the Semi-Major/Semi-Minor Axes</h2>
+      <p>
+        The <span class="major">major axis</span> is the long axis of the ellipse.
+        The <span class="minor">minor axis</span> is the short axis of the ellipse.
+      </p>
+      <p>
+        More often, though, we talk about the
+        <em>semi-major axis</em> (abbreviated <em>a</em>)
+        and the
+        <em>semi-minor axis</em> (abbreviated <em>b</em>)
+        which are just half the major and minor axes respectively (shown thicker below).
+        If the major and minor axes are the same, then we have a circle.
+      </p>
+      <p>
+        How squashed or &ldquo;off-circle&rdquo; the ellipse is is called the
+        <em>eccentricity</em>
+        (abbreviated <em>e</em>).</p>
+      <p>
+        The semi-major axis, semi-minor axis, and eccentricity are related
+        such that, if you know any two of the three, you can easily
+        calculate the third.
+      </p>
+      <div id="drawing"></div>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.4/svg.min.js">
+    </script>
+    <script>
+
+      var mx = 800;
+      var my = 500;
+
+      var draw = SVG('drawing').size(mx, my);
+
+      var cx = mx / 2;
+      var cy = my / 2;
+
+      var a = 300;
+      var b = 200;
+
+      c = Math.sqrt(Math.pow(a, 2) - Math.pow(b, 2));
+
+      draw.line(cx + a, cy, cx - a, cy).addClass('major');
+      draw.line(cx, cy - b, cx, cy + b).addClass('minor');
+      draw.line(cx, cy, cx - a, cy).addClass('semi-major');
+      draw.line(cx, cy - b, cx, cy).addClass('semi-minor');
+
+      var focus1 = draw.circle(10).addClass('main-focus');
+      var focus2 = draw.circle(10).addClass('main-focus');
+      var orbit = draw.ellipse().center(cx, cy).addClass('orbit');
+
+      focus1.center(cx - c, cy);
+      focus2.center(cx + c, cy);
+      orbit.size(a * 2, b * 2);
+
+    </script>
+    <script type="text/javascript">
+      var _gauges = _gauges || [];
+      (function() {
+        var t   = document.createElement('script');
+        t.type  = 'text/javascript';
+        t.async = true;
+        t.id    = 'gauges-tracker';
+        t.setAttribute('data-site-id', '4f7c4470613f5d112800015d');
+        t.setAttribute('data-track-path', 'https://track.gaug.es/track.gif');
+        t.src = 'https://d2fuc4clr7gvcn.cloudfront.net/track.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(t, s);
+      })();
+    </script>
+  </body>
+</html>

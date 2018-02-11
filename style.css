@@ -20,6 +20,7 @@ ul.lessons li .num {
 }
 p, li {
   font-size: 16pt;
+  color: rgba(211, 211, 211, 0.8);
 }
 p.note {
   font-size: 12pt;
@@ -65,6 +66,32 @@ main {
 }
 .radial-line {
   stroke: rgba(211, 211, 211, 0.5);
+}
+#drawing .major {
+  stroke: rgba(211, 211, 0, 0.8);
+  stroke-width: 1;
+}
+#drawing .semi-major {
+  stroke: rgba(211, 211, 0, 0.8);
+  stroke-width: 2;
+}
+span.major {
+  color: rgba(211, 211, 0, 0.8);
+}
+#drawing .minor {
+  stroke: rgba(0, 211, 211, 0.8);
+  stroke-width: 1;
+}
+#drawing .semi-minor {
+  stroke: rgba(0, 211, 211, 0.8);
+  stroke-width: 2;
+}
+span.minor {
+  color: rgba(0, 211, 211, 0.8);
+}
+em {
+  font-style: normal;
+  color: white;
 }
 .text {
     font-family: "Delius";

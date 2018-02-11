@@ -9,6 +9,7 @@
     <nav>
       <a href="./">Orbits Tutorial</a> &mdash;
       <a href="010.html">10</a> |
+      <a href="012.html">12</a> |
       <a href="015.html" class="active">15</a> |
       <a href="020.html">20</a> |
       <a href="040.html">40</a> |
@@ -18,9 +19,9 @@
     <main>
       <h2>Relationship between Focal Points and Eccentricity</h2>
       <p>
-        The distance between the focal points determines the eccentricity of the
-        ellipse (or vice versa). When the focal points are on top of one another,
-        the eccentricity is zero and we have a circle.
+        The distance between the focal points is also related to the eccentricity.
+        When the focal points are on the same spot, the eccentricity is
+        zero and we have a circle.
       </p>
       <div id="drawing"></div>
     </main>
@@ -38,10 +39,13 @@
 
       var a = 300;
 
-      var focus1 = draw.circle(10).addClass('secondary-focus');
-      var focus2 = draw.circle(10).addClass('secondary-focus');
+      var focus1 = draw.circle(10).addClass('main-focus');
+      var focus2 = draw.circle(10).addClass('main-focus');
       var orbit = draw.ellipse().center(cx, cy).addClass('orbit');
       var text = draw.text('').center(100, 100).addClass('text');
+
+      var semimajor = draw.line(cx, cy, cx - a, cy).addClass('semi-major');
+      var semiminor = draw.line(cx, cy, cx, cy).addClass('semi-minor');
 
       function callback(ms) {
 
@@ -59,6 +63,8 @@
         focus1.center(cx - c, cy);
         focus2.center(cx + c, cy);
         orbit.size(a * 2, b * 2 + 1);  // add 1 pixel just so e = 1 draws line
+
+        semiminor.plot(cx, cy - b, cx, cy);
 
         requestAnimationFrame(callback);
       }
