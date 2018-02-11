@@ -24,8 +24,8 @@
       </p>
       <div id="drawing"></div>
     </main>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.4/svg.min.js">
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.4/svg.min.js"></script>
+    <script src="utils.js"></script>
     <script>
 
       var mx = 800;
@@ -38,16 +38,15 @@
 
       var a = 300;
       var b = 250;
+      var c = dist(a, b);
 
       var focus1 = draw.circle(20).addClass('main-focus');
       var focus2 = draw.circle(10).addClass('secondary-focus');
       var orbit = draw.ellipse().center(cx, cy).addClass('orbit');
 
-      var c = Math.sqrt(Math.pow(a, 2) - Math.pow(b, 2));
-
       focus1.center(cx - c, cy);
       focus2.center(cx + c, cy);
-      orbit.size(a * 2, b * 2);
+      orbit.size(2 * a, 2 * b);
 
     </script>
     <script type="text/javascript">

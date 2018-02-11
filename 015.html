@@ -19,14 +19,15 @@
     <main>
       <h2>Relationship between Focal Points and Eccentricity</h2>
       <p>
-        The distance between the focal points is also related to the eccentricity.
+        The distance between the focal points is also related to the eccentricity
+        (and hence the ratio of the semi-major and semi-minor axes).
         When the focal points are on the same spot, the eccentricity is
         zero and we have a circle.
       </p>
       <div id="drawing"></div>
     </main>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.4/svg.min.js">
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.4/svg.min.js"></script>
+    <script src="utils.js"></script>
     <script>
 
       var mx = 800;
@@ -55,14 +56,14 @@
         if (m > 900) m = 900;
         var c = m / 3;
 
-        b = Math.sqrt(Math.pow(a, 2) - Math.pow(c, 2));
+        var b = dist(a, c);
+        var ecc = dist(1, b / a);
 
-        var ecc = Math.sqrt(1 - Math.pow(b / a, 2))
         text.text(`e = ${Math.round(ecc * Math.pow(10, 1)) / Math.pow(10, 1)}`);
 
         focus1.center(cx - c, cy);
         focus2.center(cx + c, cy);
-        orbit.size(a * 2, b * 2 + 1);  // add 1 pixel just so e = 1 draws line
+        orbit.size(2 * a, 2 * b + 1);  // add 1 pixel just so e = 1 draws line
 
         semiminor.plot(cx, cy - b, cx, cy);
 

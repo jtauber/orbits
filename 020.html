@@ -27,8 +27,8 @@
       </p>
       <div id="drawing"></div>
     </main>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.4/svg.min.js">
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.4/svg.min.js"></script>
+    <script src="utils.js"></script>
     <script>
 
       var mx = 800;
@@ -41,8 +41,9 @@
 
       var a = 300;
       var b = 250;
+      var c = dist(a, b);
 
-      var ecc = Math.sqrt(1 - Math.pow(b / a, 2));
+      var ecc = dist(1, b / a);
 
       var path = draw.path().addClass('area');
 
@@ -51,7 +52,7 @@
 
       var planet = draw.circle(10).addClass('planet');
 
-      var fx = cx - Math.sqrt(a*a - b*b);
+      var fx = cx - c;
       var fy = cy;
 
       focus1.center(fx, fy);

@@ -24,8 +24,8 @@
       </p>
       <div id="drawing"></div>
     </main>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.4/svg.min.js">
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.4/svg.min.js"></script>
+    <script src="utils.js"></script>
     <script>
 
       var mx = 800;
@@ -74,10 +74,10 @@
 
       for (var i=0, size=planets.length; i < size; i++) {
         var planet = planets[i];
-        planet.b = planet.a * Math.sqrt(1 - Math.pow(planet.ecc, 2));
-        planet.cx = fx + Math.sqrt(Math.pow(planet.a, 2) - Math.pow(planet.b, 2));
+        planet.b = planet.a * dist(1, planet.ecc);
+        planet.cx = fx + dist(planet.a, planet.b);
         planet.cy = fy;
-        planet.orbit = draw.ellipse(planet.a * 2, planet.b * 2).fill("none").stroke("lightgray").center(planet.cx, planet.cy).transform({rotation: planet.rot, cx: fx, cy: fy});
+        planet.orbit = draw.ellipse(2 * planet.a, 2 * planet.b).fill("none").stroke("lightgray").center(planet.cx, planet.cy).transform({rotation: planet.rot, cx: fx, cy: fy});
         planet.planet = draw.circle(8).fill("lightgray");
       }
 
