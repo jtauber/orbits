@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Putting Together the Mathematics So Far — Orbits Tutorial</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="./">Orbits Tutorial</a> &mdash;
+      <a href="010.html">10</a> |
+      <a href="012.html">12</a> |
+      <a href="015.html">15</a> |
+      <a href="017.html">17</a> |
+      <a href="018.html">18</a> |
+      <a href="019.html" class="active">19</a> |
+      <a href="020.html">20</a> |
+      <a href="040.html">40</a> |
+      <a href="050.html">50</a>
+      <a href="https://twitter.com/jtauber" class="twitter">@jtauber</a>
+    </nav>
+    <main>
+      <h2>Putting Together the Mathematics So Far</h2>
+
+      <p>
+        We've established the relationship:
+      </p>
+      <div class="formula">
+        <span class="focal-distance">c</span><sup>2</sup>
+        =
+        <span class="semi-major">a</span><sup>2</sup>
+        &minus;
+        <span class="semi-minor">b</span><sup>2</sup>
+      </div>
+
+      <p>
+        We also saw earlier that <em>eccentricity</em> can be defined as:
+      </p>
+      <div class="formula">
+        e
+        =
+        <span class="focal-distance">c</span> / <span class="semi-major">a</span>
+      </div>
+
+      <p>
+        This gives us enough to interrelate the four quantities:
+      </p>
+      <ul>
+        <li><span class="semi-major">a</span> &mdash; <span class="semi-major">semi-major axis</span></li>
+        <li><span class="semi-minor">b</span> &mdash; <span class="semi-minor">semi-minor axis</span></li>
+        <li><span class="focal-distance">c</span> &mdash; <span class="focal-distance">focal distance</span></li>
+        <li><em>e</em> &mdash; <em>eccentricity</em></li>
+      </ul>
+      <p>
+        and, given any two, calculate the other two.
+      </p>
+
+      <p>
+        In particular, we can substitute each of the equations above into the
+        other one and rearrange to get <em>eccentricity</em> as a function of
+        the ratio of <span class="semi-minor">semi-minor axis</span>
+        to <span class="semi-major">semi-major axis</span>:
+      </p>
+
+      <div class="formula">
+        e<sup>2</sup>
+        =
+        1
+        &minus;
+        (
+        <span class="semi-minor">b</span>
+        /
+        <span class="semi-major">a</span>
+        )
+        <sup>2</sup></div>
+      </div>
+
+      <p>
+        or the <span class="semi-minor">semi-minor axis</span> as a function of
+        <span class="semi-major">semi-major axis</span> and the <em>eccentricity</em>:
+      </p>
+
+      <div class="formula">
+        <span class="semi-minor">b</span><sup>2</sup>
+        =
+        <span class="semi-major">a</span><sup>2</sup>
+        (
+        1
+        &minus;
+        e<sup>2</sup>
+        )
+      </div>
+
+      <p>
+        These equations are used at various points in the code behind
+        all these visualisations.
+      </p>
+
+      <p>
+        It is common for the <span class="semi-major">semi-major axis</span>
+        and <em>eccentricity</em> to be given for an orbital body and the rest
+        calculated from them.
+      </p>
+
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.4/svg.min.js"></script>
+    <script src="utils.js"></script>
+    <script>
+    </script>
+    <script type="text/javascript">
+      var _gauges = _gauges || [];
+      (function() {
+        var t   = document.createElement('script');
+        t.type  = 'text/javascript';
+        t.async = true;
+        t.id    = 'gauges-tracker';
+        t.setAttribute('data-site-id', '4f7c4470613f5d112800015d');
+        t.setAttribute('data-track-path', 'https://track.gaug.es/track.gif');
+        t.src = 'https://d2fuc4clr7gvcn.cloudfront.net/track.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(t, s);
+      })();
+    </script>
+  </body>
+</html>

@@ -48,7 +48,7 @@ a.active {
 main {
   padding: 20px 50px;
 }
-#drawing {
+div.svg {
   text-align: center;
 }
 .orbit {
@@ -67,27 +67,56 @@ main {
 .radial-line {
   stroke: rgba(211, 211, 211, 0.5);
 }
-#drawing .major {
-  stroke: rgba(211, 211, 0, 0.8);
-  stroke-width: 1;
+line.focal-distance {
+  stroke: rgba(150, 150, 255, 0.8);
+  stroke-width: 2;
 }
-#drawing .semi-major {
+text.focal-distance, tspan.focal-distance {
+  fill: rgba(150, 150, 255, 0.8);
+}
+span.focal-distance {
+  color: rgba(150, 150, 255, 0.8);
+}
+line.radial-line1 {
+  stroke: rgba(255, 100, 100, 0.8);
+  stroke-width: 2;
+}
+span.radial-line1 {
+  color: rgba(255, 100, 100, 0.8);
+}
+line.radial-line2 {
+  stroke: rgba(100, 255, 100, 0.8);
+  stroke-width: 2;
+}
+span.radial-line2 {
+  color: rgba(100, 255, 100, 0.8);
+}
+
+line.semi-major {
   stroke: rgba(211, 211, 0, 0.8);
   stroke-width: 2;
+}
+text.semi-major, tspan.semi-major {
+  fill: rgba(211, 211, 0, 0.8);
 }
 span.major {
   color: rgba(211, 211, 0, 0.8);
 }
-#drawing .minor {
-  stroke: rgba(0, 211, 211, 0.8);
-  stroke-width: 1;
+span.semi-major {
+  color: rgba(211, 211, 0, 1.0);
 }
-#drawing .semi-minor {
+line.semi-minor {
   stroke: rgba(0, 211, 211, 0.8);
   stroke-width: 2;
 }
+text.semi-minor {
+  fill: rgba(0, 211, 211, 0.8);
+}
 span.minor {
   color: rgba(0, 211, 211, 0.8);
+}
+span.semi-minor {
+  color: rgba(0, 211, 211, 1.0);
 }
 em {
   font-style: normal;
@@ -97,4 +126,25 @@ em {
     font-family: "Delius";
     font-size: 24pt;
     fill: rgba(211, 211, 211, 1.0);
+}
+.text1 {
+    font-family: "Delius";
+    font-size: 24pt;
+    fill: rgba(211, 100, 100, 1.0);
+}
+.text2 {
+    font-family: "Delius";
+    font-size: 24pt;
+    fill: rgba(100, 211, 100, 1.0);
+}
+.formula {
+  font-size: 20pt;
+  text-align: center;
+  color: white;
+  margin: 20px auto;
+  padding: 20px;
+  width: 10em;
+}
+.formula sup {
+  font-size: 66%;
 }

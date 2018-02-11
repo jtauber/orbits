@@ -11,6 +11,9 @@
       <a href="010.html">10</a> |
       <a href="012.html">12</a> |
       <a href="015.html" class="active">15</a> |
+      <a href="017.html">17</a> |
+      <a href="018.html">18</a> |
+      <a href="019.html">19</a> |
       <a href="020.html">20</a> |
       <a href="040.html">40</a> |
       <a href="050.html">50</a>
@@ -21,17 +24,25 @@
       <p>
         The distance between the focal points is also related to the eccentricity
         (and hence the ratio of the semi-major and semi-minor axes).
-        When the focal points are on the same spot, the eccentricity is
-        zero and we have a circle.
       </p>
-      <div id="drawing"></div>
+      <p>
+        In fact, if you take how far the focal points are from the centre
+        (called the <span class="focal-distance">focal distance</span> or <span class="focal-distance">c</span>) and
+        divide by the semi-major axis <span class="semi-major">a</span>,
+        you get the eccentricity <em>e</em>.
+      </p>
+      <p>
+        When the focal points are on the same spot (<span class="focal-distance">c</span> = 0), the eccentricity is
+        zero and we have a circle. Most planet orbits are, as we'll see, close to zero eccentricity.
+      </p>
+      <div id="drawing" class="svg"></div>
     </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.4/svg.min.js"></script>
     <script src="utils.js"></script>
     <script>
 
       var mx = 800;
-      var my = 800;
+      var my = 700;
 
       var draw = SVG('drawing').size(mx, my);
 
@@ -40,10 +51,20 @@
 
       var a = 300;
 
-      var focus1 = draw.circle(10).addClass('main-focus');
-      var focus2 = draw.circle(10).addClass('main-focus');
+      var focus1 = draw.circle(10).addClass('main-focus').center(cx - a, cy);
+      var focus2 = draw.circle(10).addClass('main-focus').center(cx + a, cy);
       var orbit = draw.ellipse().center(cx, cy).addClass('orbit');
-      var text = draw.text('').center(100, 100).addClass('text');
+      var focaldistance = draw.line(0, 0, cx, cy).addClass('focal-distance');
+
+      var text = draw.text('').center(100, 50).addClass('text');
+      text.build(true);
+      text.plain('e = ')
+      text.tspan('c').addClass('focal-distance');
+      text.plain(' / ')
+      text.tspan(' a ').addClass('semi-major');
+      text.plain(' = ')
+      var tspan = text.tspan('');
+      text.build(false);
 
       var semimajor = draw.line(cx, cy, cx - a, cy).addClass('semi-major');
       var semiminor = draw.line(cx, cy, cx, cy).addClass('semi-minor');
@@ -52,21 +73,23 @@
 
         // we want c to oscillate from 0-300, pausing at each end
         var m = Math.abs((ms % 2200) - 1100) - 100;
-        if (m < 0) m = 0;
-        if (m > 900) m = 900;
-        var c = m / 3;
+        if (m) {
+          if (m < 0) m = 0;
+          if (m > 900) m = 900;
+          var c = m / 3;
 
-        var b = dist(a, c);
-        var ecc = dist(1, b / a);
+          var b = dist(a, c);
+          var ecc = dist(1, b / a);
 
-        text.text(`e = ${Math.round(ecc * Math.pow(10, 1)) / Math.pow(10, 1)}`);
+          tspan.clear().text(`${Math.round(ecc * Math.pow(10, 1)) / Math.pow(10, 1)}`);
 
-        focus1.center(cx - c, cy);
-        focus2.center(cx + c, cy);
-        orbit.size(2 * a, 2 * b + 1);  // add 1 pixel just so e = 1 draws line
+          focus1.center(cx - c, cy);
+          focus2.center(cx + c, cy);
+          focaldistance.plot(cx, cy + 5, cx - c, cy + 5);
+          orbit.size(2 * a, 2 * b + 1);  // add 1 pixel just so e = 1 draws line
 
-        semiminor.plot(cx, cy - b, cx, cy);
-
+          semiminor.plot(cx, cy - b, cx, cy);
+        }
         requestAnimationFrame(callback);
       }
       callback();

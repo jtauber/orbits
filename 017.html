@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sum of the Distances to the Focal Points — Orbits Tutorial</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="./">Orbits Tutorial</a> &mdash;
+      <a href="010.html">10</a> |
+      <a href="012.html">12</a> |
+      <a href="015.html">15</a> |
+      <a href="017.html" class="active">17</a> |
+      <a href="018.html">18</a> |
+      <a href="019.html">19</a> |
+      <a href="020.html">20</a> |
+      <a href="040.html">40</a> |
+      <a href="050.html">50</a>
+      <a href="https://twitter.com/jtauber" class="twitter">@jtauber</a>
+    </nav>
+    <main>
+      <h2>Sum of the Distances to the Focal Points</h2>
+      <p>
+        One defining property of an ellipse is that, at any point on it,
+        the sum of the distances to the two focal points is the same.
+      </p>
+      <p>
+        What is this sum also equal to? A clue is to look at the leftmost and
+        rightmost points as, from there, the distance to each focal point can easily be
+        expressed in terms of the semi-major axis <span class="semi-major">a</span>
+        and the focal distance <span class="focal-distance">c</span>.
+      </p>
+
+      <div id="drawing" class="svg"></div>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.4/svg.min.js"></script>
+    <script src="utils.js"></script>
+    <script>
+
+      var mx = 800;
+      var my = 600;
+
+      var draw = SVG('drawing').size(mx, my);
+
+      var cx = mx / 2;
+      var cy = my / 2;
+
+      var a = 300;
+      var b = 200;
+      var c = dist(a, b);
+
+      var ecc = dist(1, b / a);
+
+      var focus1 = draw.circle(10).addClass('main-focus');
+      var focus2 = draw.circle(10).addClass('main-focus');
+      var orbit = draw.ellipse().center(cx, cy).addClass('orbit');
+      var text = draw.text('').center(750, 50).font({'anchor': 'end'}).addClass('text');
+      text.build(true);
+      var tspan1 = text.tspan('').addClass('text1');
+      text.plain(' + ')
+      var tspan2 = text.tspan('').addClass('text2');
+      text.plain(' = ')
+      var tspan3 = text.tspan('');
+      text.build(false);
+
+      var planet = draw.circle(10).addClass('planet');
+
+      var f1x = cx - c;
+      var f1y = cy;
+      var f2x = cx + c;
+      var f2y = cy;
+
+      focus1.center(f1x, f1y);
+      focus2.center(f2x, f2y);
+      orbit.size(a * 2, b * 2);
+
+      var line1 = draw.line(0, 0, f1x, f1y).addClass('radial-line1');
+      var line2 = draw.line(0, 0, f2x, f2y).addClass('radial-line2');
+
+      function callback(ms) {
+        if (ms) {
+          var t = (ms / 20000) % 1;
+          var x1 = cx + a * Math.cos(-2 * Math.PI * t);
+          var y1 = cy + b * Math.sin(-2 * Math.PI * t);
+
+          planet.center(x1, y1);
+          line1.plot(x1, y1, f1x, f1y);
+          line2.plot(x1, y1, f2x, f2y);
+
+          var d1 = Math.sqrt(Math.pow(x1 - f1x, 2) + Math.pow(y1 - f1y, 2));
+          var d2 = Math.sqrt(Math.pow(x1 - f2x, 2) + Math.pow(y1 - f2y, 2));
+
+          tspan1.clear().text(`${round(d1, 0)}`);
+          tspan2.clear().text(`${round(d2, 0)}`);
+          tspan3.clear().text(`${round(d1 + d2, 0)}`);
+        }
+        requestAnimationFrame(callback);
+      }
+      callback();
+
+    </script>
+    <script type="text/javascript">
+      var _gauges = _gauges || [];
+      (function() {
+        var t   = document.createElement('script');
+        t.type  = 'text/javascript';
+        t.async = true;
+        t.id    = 'gauges-tracker';
+        t.setAttribute('data-site-id', '4f7c4470613f5d112800015d');
+        t.setAttribute('data-track-path', 'https://track.gaug.es/track.gif');
+        t.src = 'https://d2fuc4clr7gvcn.cloudfront.net/track.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(t, s);
+      })();
+    </script>
+  </body>
+</html>

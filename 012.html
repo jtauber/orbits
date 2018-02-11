@@ -11,6 +11,9 @@
       <a href="010.html">10</a> |
       <a href="012.html" class="active">12</a> |
       <a href="015.html">15</a> |
+      <a href="017.html">17</a> |
+      <a href="018.html">18</a> |
+      <a href="019.html">19</a> |
       <a href="020.html">20</a> |
       <a href="040.html">40</a> |
       <a href="050.html">50</a>
@@ -19,27 +22,27 @@
     <main>
       <h2>Eccentricity and the Semi-Major/Semi-Minor Axes</h2>
       <p>
-        The <span class="major">major axis</span> is the long axis of the ellipse.
-        The <span class="minor">minor axis</span> is the short axis of the ellipse.
+        The <em>major axis</em> is the long axis of the ellipse.
+        The <em>minor axis</em> is the short axis of the ellipse.
       </p>
       <p>
         More often, though, we talk about the
-        <em>semi-major axis</em> (abbreviated <em>a</em>)
+        <span class="semi-major">semi-major axis</span> (designated <span class="semi-major">a</span>)
         and the
-        <em>semi-minor axis</em> (abbreviated <em>b</em>)
-        which are just half the major and minor axes respectively (shown thicker below).
-        If the major and minor axes are the same, then we have a circle.
+        <span class="semi-minor">semi-minor axis</span> (designated <span class="semi-minor">b</span>)
+        which are just half the major and minor axes respectively.
+        If the (semi-)major and (semi-)minor axes are the same, then we have a circle.
       </p>
       <p>
-        How squashed or &ldquo;off-circle&rdquo; the ellipse is is called the
+        How squashed or &ldquo;off-circle&rdquo; the ellipse is is described by the
         <em>eccentricity</em>
         (abbreviated <em>e</em>).</p>
       <p>
-        The semi-major axis, semi-minor axis, and eccentricity are related
+        The <span class="semi-major">semi-major axis</span>, <span class="semi-minor">semi-minor axis</span>, and <em>eccentricity</em> are related
         such that, if you know any two of the three, you can easily
         calculate the third.
       </p>
-      <div id="drawing"></div>
+      <div id="drawing" class="svg"></div>
     </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.4/svg.min.js"></script>
     <script src="utils.js"></script>
@@ -57,8 +60,6 @@
       var b = 200;
       var c = dist(a, b);
 
-      draw.line(cx + a, cy, cx - a, cy).addClass('major');
-      draw.line(cx, cy - b, cx, cy + b).addClass('minor');
       draw.line(cx, cy, cx - a, cy).addClass('semi-major');
       draw.line(cx, cy - b, cx, cy).addClass('semi-minor');
 
