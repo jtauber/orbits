@@ -73,7 +73,7 @@
       var tspan3 = text.tspan('');
       text.build(false);
 
-      var planet = draw.circle(10).addClass('planet');
+      var planet = draw.circle(10).center(cx + a, cy).addClass('planet');
 
       var f1x = cx - c;
       var f1y = cy;
@@ -84,8 +84,8 @@
       focus2.center(f2x, f2y);
       orbit.size(a * 2, b * 2);
 
-      var line1 = draw.line(0, 0, f1x, f1y).addClass('radial-line1');
-      var line2 = draw.line(0, 0, f2x, f2y).addClass('radial-line2');
+      var line1 = draw.line(cx + a, cy, f1x, f1y).addClass('radial-line1');
+      var line2 = draw.line(cx + a, cy, f2x, f2y).addClass('radial-line2');
 
       function callback(ms) {
         if (ms) {

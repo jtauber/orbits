@@ -74,10 +74,10 @@
 
       var orbit = draw.ellipse().center(cx, cy).addClass('orbit');
 
-      var ref = draw.line(fx, fy, fx - a, fy).addClass('ref');
-      var semimajor = draw.line(cx, cy, cx - a, cy).addClass('semi-major');
+      var ref = draw.line(fx, fy, fx + a, fy).addClass('ref');
+      var semimajor = draw.line(cx, cy, cx + a, cy).addClass('semi-major');
       var focus1 = draw.circle(20).addClass('main-focus').center(fx, cy);
-      var periapsis = draw.circle(10).addClass('periapsis').center(fx - a, cy);
+      var periapsis = draw.circle(10).addClass('periapsis').center(fx + a, cy);
 
       var text1 = draw.text('').center(100, 50).addClass('muted-text');
       var text2 = draw.text('').center(100, 90).addClass('muted-text');

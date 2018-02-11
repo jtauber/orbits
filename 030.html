@@ -63,7 +63,7 @@
       var focus1 = draw.circle(20).addClass('main-focus');
       var orbit = draw.ellipse().center(cx, cy).addClass('orbit');
 
-      var planet = draw.circle(10).addClass('planet');
+      var planet = draw.circle(10).center(cx - a, cy).addClass('planet');
 
       var fx = cx - c;
       var fy = cy;
@@ -71,7 +71,7 @@
       focus1.center(fx, fy);
       orbit.size(a * 2, b * 2);
 
-      var line1 = draw.line(0, 0, fx, fy).addClass('radial-line');
+      var line1 = draw.line(cx - a, cy, fx, fy).addClass('radial-line');
 
       function position(t) {
 
