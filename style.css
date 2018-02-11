@@ -35,23 +35,40 @@ nav {
   padding: 5px 10px;
   font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   font-size: 12pt;
+  display: flex;
+  justify-content: space-between;
 }
 a {
-  text-decoration: none;
   color: rgba(211, 211, 211, 0.8);
 }
-a.twitter {
-  float: right;
+.lessons a, nav a {
+  text-decoration: none;
+  color: rgba(211, 211, 211, 0.4);
 }
 a:hover {
   color: white;
 }
-a.active {
-  color: rgba(211, 211, 211, 0.4);
+nav a.active {
+  color: rgba(211, 211, 211, 0.8);
 }
 main {
   padding: 20px 50px;
 }
+div.pagination {
+  margin-top: 100px;
+  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-size: 14pt;
+  display: flex;
+  justify-content: space-between;
+}
+div.pagination a {
+  text-decoration: none;
+  color: rgba(211, 211, 211, 0.4);
+}
+div.pagination a:hover {
+  color: white;
+}
+
 div.svg {
   text-align: center;
 }
