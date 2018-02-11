@@ -9,6 +9,10 @@ body {
 h1 {
   font-size: 32pt;
 }
+h1 span {
+  font-size: 80%;
+  color: rgba(211, 211, 211, 0.4);
+}
 h2 {
   font-size: 24pt;
 }
