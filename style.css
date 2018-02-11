@@ -118,6 +118,15 @@ span.minor {
 span.semi-minor {
   color: rgba(0, 211, 211, 1.0);
 }
+circle.periapsis {
+  fill: rgba(211, 100, 211, 1.0);
+}
+span.periapsis {
+  color: rgba(211, 100, 211, 1.0);
+}
+line.ref {
+  stroke: rgba(211, 211, 211, 0.3);
+}
 em {
   font-style: normal;
   color: white;
@@ -126,6 +135,11 @@ em {
     font-family: "Delius";
     font-size: 24pt;
     fill: rgba(211, 211, 211, 1.0);
+}
+.muted-text {
+    font-family: "Delius";
+    font-size: 24pt;
+    fill: rgba(211, 211, 211, 0.4);
 }
 .text1 {
     font-family: "Delius";

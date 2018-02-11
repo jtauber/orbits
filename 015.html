@@ -14,6 +14,7 @@
       <a href="017.html">17</a> |
       <a href="018.html">18</a> |
       <a href="019.html">19</a> |
+      <a href="022.html">22</a> |
       <a href="030.html">30</a> |
       <a href="040.html">40</a> |
       <a href="050.html">50</a>
@@ -54,7 +55,7 @@
       var focus1 = draw.circle(10).addClass('main-focus').center(cx - a, cy);
       var focus2 = draw.circle(10).addClass('main-focus').center(cx + a, cy);
       var orbit = draw.ellipse().center(cx, cy).addClass('orbit');
-      var focaldistance = draw.line(0, 0, cx, cy).addClass('focal-distance');
+      var focaldistance = draw.line(cx - a, cy, cx, cy).addClass('focal-distance');
 
       var text = draw.text('').center(100, 50).addClass('text');
       text.build(true);
@@ -72,7 +73,7 @@
       function callback(ms) {
 
         // we want c to oscillate from 0-300, pausing at each end
-        var m = Math.abs((ms % 2200) - 1100) - 100;
+        var m = Math.abs(((ms / 2) % 2200) - 1100) - 100;
         if (m) {
           if (m < 0) m = 0;
           if (m > 900) m = 900;
@@ -81,7 +82,7 @@
           var b = dist(a, c);
           var ecc = dist(1, b / a);
 
-          tspan.clear().text(`${Math.round(ecc * Math.pow(10, 1)) / Math.pow(10, 1)}`);
+          tspan.clear().text(`${round(ecc, 1)}`);
 
           focus1.center(cx - c, cy);
           focus2.center(cx + c, cy);

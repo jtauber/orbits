@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Argument of Periapsis — Orbits Tutorial</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="./">Orbits Tutorial</a> &mdash;
+      <a href="010.html">10</a> |
+      <a href="012.html">12</a> |
+      <a href="015.html">15</a> |
+      <a href="017.html">17</a> |
+      <a href="018.html">18</a> |
+      <a href="019.html">19</a> |
+      <a href="022.html" class="active">22</a> |
+      <a href="030.html">30</a> |
+      <a href="040.html">40</a> |
+      <a href="050.html">50</a>
+      <a href="https://twitter.com/jtauber" class="twitter">@jtauber</a>
+    </nav>
+    <main>
+      <h2>Argument of Periapsis</h2>
+      <p>
+        The <span class="semi-major">semi-major axis</span> and
+        <em>eccentricity</em> determine the size and shape of an orbit relative
+        to its plane. But multiple orbits, even on the same plane, may differ in
+        their rotation relative to some reference direction.
+      </p>
+      <p>
+        The angle of this rotation is referred to as the
+        <em>argument of periapsis</em>, designated <em>ω</em>.
+        The <em>periapsis</em> (<span class="periapsis">●</span>
+        in the animation below) is the point
+        in the orbit closest to the point being orbited around. For planets
+        orbiting the Sun, this is often referred to as the <em>perihelion</em>.
+        A perfectly circular orbit (<em>e</em> = 0) technically would not have
+        a specific periapsis as all points would be equally close.
+      </p>
+      <p>
+        Here is a series of exaggerated orbits differing one at a time in each
+        of the three elements <em>e</em>, <em>a</em>, and <em>ω</em>
+        to give you a sense of the impact of changing each.
+      </p>
+      <div id="drawing" class="svg"></div>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.4/svg.min.js"></script>
+    <script src="utils.js"></script>
+    <script>
+
+      var mx = 800;
+      var my = 700;
+
+      var draw = SVG('drawing').size(mx, my);
+
+      var fx = mx * 0.6;
+      var fy = my * 0.4;
+
+      var a = 200;
+      var c = 0;
+
+      var cx = fx - c;
+      var cy = fy;
+
+      var orbit = draw.ellipse().center(cx, cy).addClass('orbit');
+
+      var ref = draw.line(fx, fy, fx - a, fy).addClass('ref');
+      var semimajor = draw.line(cx, cy, cx - a, cy).addClass('semi-major');
+      var focus1 = draw.circle(20).addClass('main-focus').center(fx, cy);
+      var periapsis = draw.circle(10).addClass('periapsis').center(fx - a, cy);
+
+      var text1 = draw.text('').center(100, 50).addClass('muted-text');
+      var text2 = draw.text('').center(100, 90).addClass('muted-text');
+      var text3 = draw.text('').center(100, 130).addClass('muted-text');
+
+      function callback(ms) {
+
+        if (ms) {
+          var m = ms % 9000;
+          var ph = Math.floor(m / 1500);
+          var st = (m % 1500) / 1500;
+
+          var ecc, omega;
+          if (ph == 0) {
+            // ecc increasing
+            ecc = st / 1.5;
+            a = 200;
+            omega = 0;
+            text1.removeClass('muted-text').addClass('text');
+            text2.removeClass('text').addClass('muted-text');
+            text3.removeClass('text').addClass('muted-text');
+          } else if (ph == 1) {
+            // a decreasing
+            ecc = 1 / 1.5;
+            a = 200 - 50 * st;
+            omega = 0;
+            text1.removeClass('text').addClass('muted-text');
+            text2.removeClass('muted-text').addClass('text');
+            text3.removeClass('text').addClass('muted-text');
+          } else if (ph == 2) {
+            // omega increasing
+            ecc = 1 / 1.5;
+            a = 150;
+            omega = 60 * st;
+            text1.removeClass('text').addClass('muted-text');
+            text2.removeClass('text').addClass('muted-text');
+            text3.removeClass('muted-text').addClass('text');
+          } else if (ph == 3) {
+            // a increasing
+            ecc = 1 / 1.5;
+            a = 150 + 50 * st;
+            omega = 60;
+            text1.removeClass('text').addClass('muted-text');
+            text2.removeClass('muted-text').addClass('text');
+            text3.removeClass('text').addClass('muted-text');
+          } else if (ph == 4) {
+            // ecc decreasing
+            ecc = (1 - st) / 1.5;
+            a = 200;
+            omega = 60;
+            text1.removeClass('muted-text').addClass('text');
+            text2.removeClass('text').addClass('muted-text');
+            text3.removeClass('text').addClass('muted-text');
+          } else if (ph == 5) {
+            // omega decreasing
+            ecc = 0;
+            a = 200;
+            omega = 60 * (1 - st);
+            text1.removeClass('text').addClass('muted-text');
+            text2.removeClass('text').addClass('muted-text');
+            text3.removeClass('muted-text').addClass('text');
+          }
+          var c = a * ecc;
+          var cx = fx - c;
+          var cy = fy;
+
+          var b = dist(a, c);
+
+          text1.text(`e = ${round(ecc, 2)}`);
+          text2.text(`a = ${round(a, 0)}px`);
+          text3.text(`ω = ${round(omega, 0)}°`);
+
+          focus1.center(fx, fy);
+          orbit.center(cx, cy);
+          orbit.size(2 * a, 2 * b);
+          orbit.transform({rotation: -omega, cx: fx, cy: fy})
+          ref.plot(mx, cy, fx, fy);
+          semimajor.plot(cx + a, cy, cx, cy).transform({rotation: -omega, cx: fx, cy: fy});
+          periapsis.center(cx + a, cy).transform({rotation: -omega, cx: fx, cy: fy});
+        }
+        requestAnimationFrame(callback);
+      }
+      callback();
+
+    </script>
+    <script type="text/javascript">
+      var _gauges = _gauges || [];
+      (function() {
+        var t   = document.createElement('script');
+        t.type  = 'text/javascript';
+        t.async = true;
+        t.id    = 'gauges-tracker';
+        t.setAttribute('data-site-id', '4f7c4470613f5d112800015d');
+        t.setAttribute('data-track-path', 'https://track.gaug.es/track.gif');
+        t.src = 'https://d2fuc4clr7gvcn.cloudfront.net/track.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(t, s);
+      })();
+    </script>
+  </body>
+</html>
