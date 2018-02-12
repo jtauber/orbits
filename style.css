@@ -157,9 +157,23 @@ em {
     font-size: 24pt;
     fill: rgba(211, 211, 211, 1.0);
 }
+.planet-select {
+    font-family: "Delius";
+    font-size: 16pt;
+    fill: rgba(211, 211, 211, 0.4);
+    cursor: pointer;
+}
+.planet-select.active {
+  fill: rgba(211, 211, 211, 1.0);
+}
 .muted-text {
     font-family: "Delius";
     font-size: 24pt;
+    fill: rgba(211, 211, 211, 0.4);
+}
+.small-muted-text {
+    font-family: "Delius";
+    font-size: 16pt;
     fill: rgba(211, 211, 211, 0.4);
 }
 .text1 {

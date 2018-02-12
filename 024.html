@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>First Three Orbital Elements of the Planets — Orbits Tutorial</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="./">Orbits Tutorial</a> |
+      <a href="010.html">10</a> |
+      <a href="012.html">12</a> |
+      <a href="015.html">15</a> |
+      <a href="017.html">17</a> |
+      <a href="018.html">18</a> |
+      <a href="019.html">19</a> |
+      <a href="022.html">22</a> |
+      <a href="024.html" class="active">24</a> |
+      <a href="030.html">30</a> |
+      <a href="040.html">40</a> |
+      <a href="050.html">50</a> |
+      <a href="https://twitter.com/jtauber">@jtauber</a>
+    </nav>
+    <main>
+
+      <h2>First Three Orbital Elements of the Planets</h2>
+
+      <p>
+        Click on the name of a planet to see its <span class="semi-major">semi-major axis</span>,
+        <em>eccentricity</em>, and <em>argument of perihelion</em> (periapsis).
+      </p>
+
+      <p>
+        Recall that these three elements define the size, shape, and orientation
+        of the planets orbit only relative to its orbital plane.
+      </p>
+
+      <p>
+        Note that the scale changes between the inner planets, the outer planets, and Pluto.
+      </p>
+
+      <div id="drawing" class="svg"></div>
+
+      <div class="pagination">
+        <a href="022.html">Prev</a>
+        <a href="030.html">Next</a>
+      </div>
+
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/2.6.4/svg.min.js"></script>
+    <script src="utils.js"></script>
+    <script src="elements.js"></script>
+    <script>
+
+      var mx = 800;
+      var my = 750;
+
+      var draw = SVG('drawing').size(mx, my);
+
+      var fx = mx / 2;
+      var fy = my / 2;
+
+      var sun = draw.circle(1).addClass('main-focus').center(fx, fy);
+      var scale_text = draw.text('').move(mx, my-30).font({'anchor': 'end'}).addClass('small-muted-text')
+
+      mercuryText = draw.text('Mercury').move(0, 30).addClass('planet-select').click(function() {
+        scale = 200;
+        SVG.select('.planet-select').removeClass('active');
+        this.addClass('active');
+        update('mercury');
+      });
+      venusText = draw.text('Venus').move(0, 60).addClass('planet-select').click(function() {
+        scale = 200;
+        SVG.select('.planet-select').removeClass('active');
+        this.addClass('active');
+        update('venus');
+      });
+      earthText = draw.text('Earth').move(0, 90).addClass('planet-select').click(function() {
+        scale = 200;
+        SVG.select('.planet-select').removeClass('active');
+        this.addClass('active');
+        update('earth');
+      });
+      marsText = draw.text('Mars').move(0, 120).addClass('planet-select').click(function() {
+        scale = 200;
+        SVG.select('.planet-select').removeClass('active');
+        this.addClass('active');
+        update('mars');
+      });
+      jupiterText = draw.text('Jupiter').move(0, 180).addClass('planet-select').click(function() {
+        scale = 10;
+        SVG.select('.planet-select').removeClass('active');
+        this.addClass('active');
+        update('jupiter');
+      });
+      saturnText = draw.text('Saturn').move(0, 210).addClass('planet-select').click(function() {
+        scale = 10;
+        SVG.select('.planet-select').removeClass('active');
+        this.addClass('active');
+        update('saturn');
+      });
+      uranusText = draw.text('Uranus').move(0, 240).addClass('planet-select').click(function() {
+        scale = 10;
+        SVG.select('.planet-select').removeClass('active');
+        this.addClass('active');
+        update('uranus');
+      });
+      neptuneText = draw.text('Neptune').move(0, 270).addClass('planet-select').click(function() {
+        scale = 10;
+        SVG.select('.planet-select').removeClass('active');
+        this.addClass('active');
+        update('neptune');
+      });
+      plutoText = draw.text('Pluto').move(0, 330).addClass('planet-select').click(function() {
+        scale = 5;
+        SVG.select('.planet-select').removeClass('active');
+        this.addClass('active');
+        update('pluto');
+      });
+
+      aText = draw.text('').move(800, 40).font({'anchor': 'end'}).addClass('muted-text');
+      eText = draw.text('').move(800, 80).font({'anchor': 'end'}).addClass('muted-text');
+      apText = draw.text('').move(800, 120).font({'anchor': 'end'}).addClass('muted-text');
+
+      var orbit = draw.ellipse().addClass('orbit');
+      var semimajor = draw.line(0, 0, 0, 0).addClass('semi-major');
+
+      // centuries past J2000
+      var cy = delta_j2000() / 36525;
+
+      var planets = {
+        'mercury': mercury(),
+        'venus': venus(),
+        'earth': earth(),
+        'mars': mars(),
+        'jupiter': jupiter(),
+        'saturn': saturn(),
+        'uranus': uranus(),
+        'neptune': neptune(),
+        'pluto': pluto(),
+      };
+
+      scale = 200;
+      earthText.addClass('active');
+      update('earth');
+
+      function update(planetName) {
+        var planet = planets[planetName];
+        if (scale == 200) {
+          sun.size(10);
+        } else {
+          sun.size(5);
+        }
+        orbit.size(2 * planet.a * scale, 2 * planet.a * scale * dist(1, planet.e)).center(fx + dist(planet.a * scale, planet.a * scale * dist(1, planet.e)), fy).transform({rotation: -planet.ap, cx: fx, cy: fy});
+        var c = scale * planet.a * planet.e;
+        var cx = fx + c;
+        var cy = fy;
+        semimajor.plot(cx, cy, cx - scale * planet.a, cy).transform({rotation: -planet.ap, cx: fx, cy: fy});
+        scale_text.text(`100px = ${100/scale}AU (Sun not to scale)`);
+
+        aText.text(`a = ${round(planet.a, 2)}AU`);
+        eText.text(`e = ${round(planet.e, 2)}`);
+        apText.text(`ω = ${round(planet.ap, 2)}˚`);
+      }
+
+    </script>
+    <script type="text/javascript">
+      var _gauges = _gauges || [];
+      (function() {
+        var t   = document.createElement('script');
+        t.type  = 'text/javascript';
+        t.async = true;
+        t.id    = 'gauges-tracker';
+        t.setAttribute('data-site-id', '4f7c4470613f5d112800015d');
+        t.setAttribute('data-track-path', 'https://track.gaug.es/track.gif');
+        t.src = 'https://d2fuc4clr7gvcn.cloudfront.net/track.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(t, s);
+      })();
+    </script>
+  </body>
+</html>
