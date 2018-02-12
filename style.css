@@ -153,38 +153,38 @@ em {
   color: white;
 }
 .text {
-    font-family: "Delius";
-    font-size: 24pt;
-    fill: rgba(211, 211, 211, 1.0);
+  font-family: 'Delius', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-size: 24pt;
+  fill: rgba(211, 211, 211, 1.0);
 }
 .planet-select {
-    font-family: "Delius";
-    font-size: 16pt;
-    fill: rgba(211, 211, 211, 0.4);
-    cursor: pointer;
+  font-family: 'Delius', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-size: 16pt;
+  fill: rgba(211, 211, 211, 0.4);
+  cursor: pointer;
 }
 .planet-select.active {
   fill: rgba(211, 211, 211, 1.0);
 }
 .muted-text {
-    font-family: "Delius";
-    font-size: 24pt;
-    fill: rgba(211, 211, 211, 0.4);
+  font-family: 'Delius', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-size: 24pt;
+  fill: rgba(211, 211, 211, 0.4);
 }
 .small-muted-text {
-    font-family: "Delius";
-    font-size: 16pt;
-    fill: rgba(211, 211, 211, 0.4);
+  font-family: 'Delius', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-size: 16pt;
+  fill: rgba(211, 211, 211, 0.4);
 }
 .text1 {
-    font-family: "Delius";
-    font-size: 24pt;
-    fill: rgba(211, 100, 100, 1.0);
+  font-family: 'Delius', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-size: 24pt;
+  fill: rgba(211, 100, 100, 1.0);
 }
 .text2 {
-    font-family: "Delius";
-    font-size: 24pt;
-    fill: rgba(100, 211, 100, 1.0);
+  font-family: 'Delius', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-size: 24pt;
+  fill: rgba(100, 211, 100, 1.0);
 }
 .formula {
   font-size: 20pt;
