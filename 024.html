@@ -151,11 +151,11 @@
         } else {
           sun.size(5);
         }
-        orbit.size(2 * planet.a * scale, 2 * planet.a * scale * dist(1, planet.e)).center(fx + dist(planet.a * scale, planet.a * scale * dist(1, planet.e)), fy).transform({rotation: -planet.ap, cx: fx, cy: fy});
+        orbit.size(2 * planet.a * scale, 2 * planet.a * scale * dist(1, planet.e)).center(fx - dist(planet.a * scale, planet.a * scale * dist(1, planet.e)), fy).transform({rotation: -planet.ap, cx: fx, cy: fy});
         var c = scale * planet.a * planet.e;
-        var cx = fx + c;
+        var cx = fx - c;
         var cy = fy;
-        semimajor.plot(cx, cy, cx - scale * planet.a, cy).transform({rotation: -planet.ap, cx: fx, cy: fy});
+        semimajor.plot(cx, cy, cx + scale * planet.a, cy).transform({rotation: -planet.ap, cx: fx, cy: fy});
         scale_text.text(`100px = ${100/scale}AU (Sun not to scale)`);
 
         aText.text(`a = ${round(planet.a, 2)}AU`);
