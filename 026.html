@@ -1,9 +1,27 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Argument of Periapsis — Orbits Tutorial</title>
+    <title>Inclination — Orbits Tutorial</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="style.css" />
+    <style>
+      svg.main-svg {
+        background: rgba(255,255,255,0.05);
+        transform: perspective(2000px) rotateX(45deg) rotateY(-20deg);
+      }
+      .boundary {
+        stroke: rgba(255,255,255,0.05);
+      }
+      svg.base-svg {
+        background: rgba(50, 50, 50, 0.4);
+        transform: perspective(2000px) rotateX(45deg);
+      }
+      #drawing2 {
+        position: relative;
+        top: -604px;
+        z-index: -1000;
+      }
+    </style>
   </head>
   <body>
     <nav>
@@ -14,9 +32,9 @@
       <a href="017.html">17</a> |
       <a href="018.html">18</a> |
       <a href="019.html">19</a> |
-      <a href="022.html" class="active">22</a> |
+      <a href="022.html">22</a> |
       <a href="024.html">24</a> |
-      <a href="026.html">26</a> |
+      <a href="026.html" class="active">26</a> |
       <a href="030.html">30</a> |
       <a href="040.html">40</a> |
       <a href="050.html">50</a> |
@@ -24,38 +42,26 @@
     </nav>
     <main>
 
-      <h2>Argument of Periapsis</h2>
+      <h2>Inclination</h2>
 
       <p>
-        The <span class="semi-major">semi-major axis</span> and
-        <em>eccentricity</em> determine the size and shape of an orbit relative
-        to its orbital plane. But multiple orbits, even on the same plane,
-        may differ in their rotation relative to some reference direction.
-      </p>
-      <p>
-        The angle of this rotation is referred to as the
-        <em>argument of periapsis</em>, designated <em>ω</em>.
-        The <em>periapsis</em> (<span class="periapsis">●</span>
-        in the animation below) is the point
-        in the orbit closest to the point being orbited around. It is always on
-        the major axis. For planets
-        orbiting the Sun, the periapsis is often referred to as the
-        <em>perihelion</em>.
-        A perfectly circular orbit (<em>e</em> = 0) technically would not have
-        a specific periapsis as all points would be equally close.
-      </p>
-      <p>
-        Here is a series of exaggerated orbits, varying in each
-        of the three elements <em>e</em>, <em>a</em>, and <em>ω</em>
-        one at a time
-        to give you a sense of the impact of changing each.
+        So far, we've only been considering two dimensions and looking the
+        orbital plane from the top down. Now let's add a three-dimensional
+        perspective.
       </p>
 
-      <div id="drawing" class="svg"></div>
+      <p>
+        The plane itself may be tilted relative to some reference plane
+        (say the orbital plane of another body or the equator of the Sun).
+        This is called the <em>inclination</em> (<em>i</em>).
+      </p>
+
+      <div id="drawing1" class="svg"></div>
+      <div id="drawing2" class="svg"></div>
 
       <div class="pagination">
-        <a href="019.html">Prev</a>
-        <a href="024.html">Next</a>
+        <a href="024.html">Prev</a>
+        <a href="030.html">Next</a>
       </div>
 
     </main>
@@ -66,27 +72,36 @@
       var mx = 800;
       var my = 600;
 
-      var draw = SVG('drawing').size(mx, my);
+      var draw = SVG('drawing1').size(mx, my).addClass('main-svg');
+      var draw2 = SVG('drawing2').size(mx, my).addClass('base-svg');
 
-      var fx = mx * 0.6;
-      var fy = my * 0.45;
+      var fx = mx / 2;
+      var fy = my / 2;
 
-      var a = 200;
+      var a = 150;
       var c = 0;
 
       var cx = fx - c;
       var cy = fy;
 
-      var orbit = draw.ellipse().center(cx, cy).addClass('orbit');
+      var g = draw.group().addClass('group');
+      var n = draw2.nested();
+      n.maskWith(draw2.mask().add(draw2.rect(400, 600).move(400, 0).fill('white')));
+      var orbit = g.ellipse().center(cx, cy).addClass('orbit');
+      var orbit2 = n.ellipse().center(cx, cy).fill('none').stroke('rgba(0, 0, 0, 0.3)');
 
-      var ref = draw.line(fx, fy, fx + a, fy).addClass('ref');
-      var semimajor = draw.line(cx, cy, cx + a, cy).addClass('semi-major');
-      var focus1 = draw.circle(20).addClass('main-focus').center(fx, cy);
-      var periapsis = draw.circle(10).addClass('periapsis').center(fx + a, cy);
+      var ref = g.line(fx, fy, mx, fy).addClass('ref');
+      n.line(fx, fy, mx, fy).stroke('rgba(0, 0, 0, 0.3)');
+      var semimajor = g.line(cx, cy, cx + a, cy).addClass('semi-major');
+      var semimajor2 = n.line(cx, cy, cx + a, cy).stroke('rgba(0, 0, 0, 0.3)');
+      // elongated so as to appear spherical in perspective
+      draw2.ellipse(10, 13).addClass('main-focus').center(fx, cy);
+      g.line(fx, 0, fx, my).addClass('boundary');
 
-      var text1 = draw.text('').center(100, 50).addClass('muted-text');
-      var text2 = draw.text('').center(100, 90).addClass('muted-text');
-      var text3 = draw.text('').center(100, 130).addClass('muted-text');
+      var text1 = g.text('').move(50, 50).addClass('muted-text');
+      var text2 = g.text('').move(50, 90).addClass('muted-text');
+      var text3 = g.text('').move(50, 130).addClass('muted-text');
+      g.text('i = 20°').move(50, 200).addClass('text');
 
       function callback(ms) {
 
@@ -99,7 +114,7 @@
           if (ph == 0) {
             // ecc increasing
             ecc = st / 1.5;
-            a = 200;
+            a = 150;
             omega = 0;
             text1.removeClass('muted-text').addClass('text');
             text2.removeClass('text').addClass('muted-text');
@@ -107,7 +122,7 @@
           } else if (ph == 1) {
             // a decreasing
             ecc = 1 / 1.5;
-            a = 200 - 50 * st;
+            a = 150 - 25 * st;
             omega = 0;
             text1.removeClass('text').addClass('muted-text');
             text2.removeClass('muted-text').addClass('text');
@@ -115,7 +130,7 @@
           } else if (ph == 2) {
             // omega increasing
             ecc = 1 / 1.5;
-            a = 150;
+            a = 125;
             omega = 60 * st;
             text1.removeClass('text').addClass('muted-text');
             text2.removeClass('text').addClass('muted-text');
@@ -123,7 +138,7 @@
           } else if (ph == 3) {
             // a increasing
             ecc = 1 / 1.5;
-            a = 150 + 50 * st;
+            a = 125 + 25 * st;
             omega = 60;
             text1.removeClass('text').addClass('muted-text');
             text2.removeClass('muted-text').addClass('text');
@@ -131,7 +146,7 @@
           } else if (ph == 4) {
             // ecc decreasing
             ecc = (1 - st) / 1.5;
-            a = 200;
+            a = 150;
             omega = 60;
             text1.removeClass('muted-text').addClass('text');
             text2.removeClass('text').addClass('muted-text');
@@ -139,7 +154,7 @@
           } else if (ph == 5) {
             // omega decreasing
             ecc = 0;
-            a = 200;
+            a = 150;
             omega = 60 * (1 - st);
             text1.removeClass('text').addClass('muted-text');
             text2.removeClass('text').addClass('muted-text');
@@ -155,13 +170,17 @@
           text2.text(`a = ${round(a, 0)}px`);
           text3.text(`ω = ${round(omega, 0)}°`);
 
-          focus1.center(fx, fy);
+          // focus1.center(fx, fy);
           orbit.center(cx, cy);
           orbit.size(2 * a, 2 * b);
           orbit.transform({rotation: -omega, cx: fx, cy: fy})
           ref.plot(mx, cy, fx, fy);
           semimajor.plot(cx + a, cy, cx, cy).transform({rotation: -omega, cx: fx, cy: fy});
-          periapsis.center(cx + a, cy).transform({rotation: -omega, cx: fx, cy: fy});
+
+          orbit2.center(cx, cy);
+          orbit2.size(2 * a, 2 * b);
+          orbit2.transform({rotation: -omega, cx: fx, cy: fy})
+          semimajor2.plot(cx + a, cy, cx, cy).transform({rotation: -omega, cx: fx, cy: fy});
         }
         requestAnimationFrame(callback);
       }
